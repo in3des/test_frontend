@@ -18,6 +18,7 @@ const countErrors = (errors) => {
     return count;
 }
 
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -38,14 +39,14 @@ class App extends React.Component {
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+        const {name, value} = event.target;
+
         let errors = this.state.errors;
 
         switch (name) {
             case 'username':
                 errors.fullName =
-                    value.length < 4
+                    value.length < 5
                         ? 'Full Name must be at least 5 characters long!'
                         : '';
                 break;
@@ -53,8 +54,9 @@ class App extends React.Component {
 
         this.setState({
             errors,
-            [name]: value
-        });
+            [name]: value,
+            [name]: target.type === 'checkbox' ? target.checked : target.value
+    });
 
         console.log("agree", this.state.agree);
         console.log("name", this.state.username);
@@ -62,12 +64,16 @@ class App extends React.Component {
         console.log("errors", this.state.errorCount);
         console.log("valid", this.state.formValid);
 
-        if (this.state.errorCount === 0 && this.state.agree === true) {
-            this.setState({greenOk: true})
-        }
-
         this.setState({formValid: validateForm(this.state.errors)});
         this.setState({errorCount: countErrors(this.state.errors)});
+
+
+
+        if (this.state.formValid) {
+            this.setState({greenOk: true})
+        } else {
+            this.setState({greenOk: false});
+        }
 
     }
 
@@ -91,8 +97,7 @@ class App extends React.Component {
                                 placeholder="your Name"
                                 value={this.state.username}
                                 onChange={this.handleInputChange}
-                                noValidate
-                                />
+                                /> &nbsp;
                             {errors.fullName.length > 0 &&
                                 <span className="error">{errors.fullName}
                                 </span>}
@@ -104,10 +109,15 @@ class App extends React.Component {
                     <br/>
                     <div className="form-group">
                         Sectors: &nbsp;
-                        <select multiple={true} size={10}>
+                        <select
+                            multiple={true}
+                            size={10}
+                            value={this.state.value}
+                            onChange={this.handleInputChange}
+                        >
                             <option value="grapefruit">Grapefruit</option>
                             <option value="lime">Lime</option>
-                            <option selected value="coconut">Coconut</option>
+                            <option value="coconut">Coconut</option>
                             <option value="mango">Mango</option>
                         </select>
                     </div>
@@ -118,14 +128,13 @@ class App extends React.Component {
                             type="checkbox"
                             checked={this.state.agree}
                             onChange={this.handleInputChange}
-                            disabled={!this.state.greenOk}
+                            disabled={!this.state.formValid}
                         />
                         Agree to terms
                     </div>
                     <br/>
                     <div>
-                        <input type="submit" value="Save" disabled={!this.state.agree}/>
-                        {/*<input type="submit" value="Save" disabled={!this.state.greenOk}/>*/}
+                        <input type="submit" value="Save" disabled={!this.state.agree || !this.state.formValid}/>
                     </div>
 
                 </Form>

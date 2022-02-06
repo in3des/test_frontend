@@ -35,11 +35,11 @@
   font-size: 0.625em;
 }
 
-.form-group {
-  /*display: flex;*/
-  flex-direction: column;
-  margin-bottom: 15px;
-}
+/*.form-group {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  margin-bottom: 15px;*/
+/*}*/
 
 /*input {*/
 /*  padding: 10px 10px;*/
