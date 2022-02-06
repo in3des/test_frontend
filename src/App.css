@@ -1,5 +1,7 @@
 .App {
-  text-align: center;
+  text-align: left;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .App-logo {
@@ -28,11 +30,26 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error {
+  color:#db2269;
+  font-size: 0.625em;
+}
+
+.form-group {
+  /*display: flex;*/
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+/*input {*/
+/*  padding: 10px 10px;*/
+/*  border-radius: 5px;*/
+/*  outline: none;*/
+/*  border: 1px solid #d6d1d5;*/
+/*}*/
+
+input::placeholder {
+  /*font-size: 1.2em;*/
+  font-weight: lighter;
+  color: #bbb;
 }
