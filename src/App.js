@@ -4,8 +4,6 @@ import Form from "react-validation/build/form";
 import SectorService from "./services/SectorService";
 import FormService from "./services/FormService";
 import Sector from "./components/Sector";
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 
 const validateForm = (errors) => {
     let valid = true;
@@ -31,17 +29,12 @@ const handleChangeMultiple = (event) => {
             sectorsId.push(Number(options[i].value));
         }
     }
-    console.log("array", sectorsId);
-    console.log("array-L", sectorsId.length);
+    // console.log("array", sectorsId);
+    // console.log("array-L", sectorsId.length);
 
     return sectorsId;
 };
 
-// function MultipleSelectNative() {
-//
-//     const [sectorValue, setSectorValue] = React.useState([]);
-//
-// }
 
 class App extends React.Component {
     constructor(props) {
@@ -49,12 +42,10 @@ class App extends React.Component {
         this.state = {
             id: null,
             username: null,
-            // sectorsId: null,
             sectorsId: [],
             agree: false,
             sectors: [],
             sectorValue: [],
-            value: [],
             formValid: false,
             errorCount: null,
             errors: {
@@ -97,9 +88,7 @@ class App extends React.Component {
                 break;
             case 'sectorsId':
                 errors.sectorsSelected =
-                    // value.length < 1
-                    // this.state.sectorsId.length < 1
-                    this.state.sectorValue.length < 1
+                    value.length < 1
                         ? 'Please select at least 1 sector!'
                         : '';
                 break;
@@ -113,20 +102,20 @@ class App extends React.Component {
 
         // console.log("agree", this.state.agree);
         // console.log("name", this.state.username);
-        // console.log("name-L", this.state.username.length);
+        console.log("name-L", this.state.username?.length);
         // console.log("sectorsId", this.state.sectorsId);
         // console.log("sectorsId-L", this.state.sectorsId.length);
         console.log("sectorValue", this.state.sectorValue.length);
-        console.log("errors", this.state.errorCount);
+        // console.log("errors", this.state.errorCount);
         // console.log("errors{}", this.state.errors);
         console.log("valid", this.state.formValid);
         // console.log("value", this.state.value);
+        // console.log("disabled state --- ", !this.state.username > 4 || !this.state.sectorValue.length > 0)
+        console.log("disabled state --- ", !(this.state.username?.length > 4 && this.state.sectorValue.length > 0))
 
         this.setState({formValid: validateForm(this.state.errors)});
         this.setState({errorCount: countErrors(this.state.errors)});
         this.setState({sectorValue: handleChangeMultiple(event)})
-        // this.setState({value: []})
-
     }
 
 
@@ -164,7 +153,6 @@ class App extends React.Component {
                     id: data.id,
                     username: data.username,
                     agree: data.agreement,
-                    // sectorValue: data.sectors
                     sectorValue: data.sectors.map(sector => sector.id)
                 })
             })
@@ -188,8 +176,6 @@ class App extends React.Component {
     }
 
 
-
-
     render() {
         const {errors} = this.state;
         return (
@@ -209,19 +195,13 @@ class App extends React.Component {
                                 placeholder="your Name"
                                 value={this.state.username}
                                 onChange={this.handleInputChange}
-                                /> &nbsp;
+                            /> &nbsp;
                             {errors.fullName.length >= 0 &&
                                 <span className="error">{errors.fullName}
                                 </span>}
-
                     </div>
-
-
-
                     <br/>
-                    <div className="form-group"
-                         // style={{width: '300px'}}
-                    >
+                    <div className="form-group">
                         Sectors: &nbsp;
                         <select
                             name="sectorsId"
@@ -232,18 +212,11 @@ class App extends React.Component {
                             onChange={this.handleInputChange}
                             required
                         >
-                            {/*<option value="18">Grapefruit &nbsp;&nbsp;</option>*/}
-                            {/*<option value="19">Lime</option>*/}
-                            {/*<option value="4">Coconut</option>*/}
-                            {/*<option value="5">Mango</option>*/}
-                            {/*<option value="1">&nbsp;&nbsp; Information Technology and Telecommunications</option>*/}
-
                             {this.getSectors()}
                         </select> &nbsp;
                         {errors.sectorsSelected.length > 0 &&
                             <span className="error">{errors.sectorsSelected}
-                                </span>}
-
+                            </span>}
                     </div>
                     <br/>
                     <div>
@@ -252,7 +225,9 @@ class App extends React.Component {
                             type="checkbox"
                             checked={this.state.agree}
                             onChange={this.handleInputChange}
-                            disabled={!this.state.formValid || this.state.sectorValue.length > 0}
+                            // disabled={!this.state.sectorValue.length > 0 || this.state.username.length === 0}
+                            // disabled={!this.state.formValid || !this.state.sectorValue.length > 0}
+                            disabled={!(this.state.username?.length > 4 && this.state.sectorValue.length > 0)}
                         />
                         Agree to terms
                     </div>
