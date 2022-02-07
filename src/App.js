@@ -24,12 +24,13 @@ class App extends React.Component {
         super(props);
         this.state = {
             agree: false,
-            greenOk: false,
-            username: '',
+            sectorIds: null,
+            username: null,
             formValid: false,
             errorCount: null,
             errors: {
                 fullName: '',
+                sectorsSelected: '',
             }
         };
 
@@ -50,30 +51,33 @@ class App extends React.Component {
                         ? 'Full Name must be at least 5 characters long!'
                         : '';
                 break;
+            case 'sectorIds':
+                errors.sectorsSelected =
+                    // value.length < 3
+                    value.length < 1
+                        ? 'Please select at least 1 sector!'
+                        : '';
+                break;
         }
 
         this.setState({
             errors,
             [name]: value,
-            [name]: target.type === 'checkbox' ? target.checked : target.value
+            [name]: target.type === 'checkbox' ? target.checked : target.value,
     });
 
         console.log("agree", this.state.agree);
         console.log("name", this.state.username);
-        console.log("greenOk", this.state.greenOk);
+        console.log("name-L", this.state.username.length);
+        console.log("selected", this.state.sectorIds);
         console.log("errors", this.state.errorCount);
         console.log("valid", this.state.formValid);
 
         this.setState({formValid: validateForm(this.state.errors)});
         this.setState({errorCount: countErrors(this.state.errors)});
+        // this.setState({sectorIds: target.value});
 
 
-
-        if (this.state.formValid) {
-            this.setState({greenOk: true})
-        } else {
-            this.setState({greenOk: false});
-        }
 
     }
 
@@ -98,7 +102,7 @@ class App extends React.Component {
                                 value={this.state.username}
                                 onChange={this.handleInputChange}
                                 /> &nbsp;
-                            {errors.fullName.length > 0 &&
+                            {errors.fullName.length >= 0 &&
                                 <span className="error">{errors.fullName}
                                 </span>}
 
@@ -107,19 +111,28 @@ class App extends React.Component {
 
 
                     <br/>
-                    <div className="form-group">
+                    <div className="form-group"
+                         // style={{width: '300px'}}
+                    >
                         Sectors: &nbsp;
                         <select
+                            name="sectorIds"
                             multiple={true}
-                            size={10}
-                            value={this.state.value}
+                            size="10"
+                            // style={{ width: '100%' }}
                             onChange={this.handleInputChange}
+                            required
                         >
-                            <option value="grapefruit">Grapefruit</option>
+                            <option value="grapefruit">Grapefruit &nbsp;&nbsp;</option>
                             <option value="lime">Lime</option>
                             <option value="coconut">Coconut</option>
                             <option value="mango">Mango</option>
-                        </select>
+                            <option value="1">&nbsp;&nbsp; Information Technology and Telecommunications</option>
+                        </select> &nbsp;
+                        {errors.sectorsSelected.length > 0 &&
+                            <span className="error">{errors.sectorsSelected}
+                                </span>}
+
                     </div>
                     <br/>
                     <div>
@@ -128,7 +141,7 @@ class App extends React.Component {
                             type="checkbox"
                             checked={this.state.agree}
                             onChange={this.handleInputChange}
-                            disabled={!this.state.formValid}
+                            disabled={!this.state.formValid && !this.state.sectorIds}
                         />
                         Agree to terms
                     </div>

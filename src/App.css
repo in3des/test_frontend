@@ -4,17 +4,6 @@
   margin-right: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -26,20 +15,17 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
 .error {
   color:#db2269;
   font-size: 0.625em;
 }
 
-/*.form-group {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  margin-bottom: 15px;*/
-/*}*/
+.form-group {
+  /*display: flex;*/
+  flex-direction: column;
+  margin-bottom: 15px;
+}
 
 /*input {*/
 /*  padding: 10px 10px;*/
