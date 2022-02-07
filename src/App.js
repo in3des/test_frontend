@@ -53,7 +53,6 @@ class App extends React.Component {
                 break;
             case 'sectorIds':
                 errors.sectorsSelected =
-                    // value.length < 3
                     value.length < 1
                         ? 'Please select at least 1 sector!'
                         : '';
@@ -141,7 +140,7 @@ class App extends React.Component {
                             type="checkbox"
                             checked={this.state.agree}
                             onChange={this.handleInputChange}
-                            disabled={!this.state.formValid && !this.state.sectorIds}
+                            disabled={!this.state.formValid || !this.state.sectorIds}
                         />
                         Agree to terms
                     </div>
