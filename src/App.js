@@ -30,7 +30,6 @@ const handleChangeMultiple = (event) => {
         }
     }
     // console.log("array", sectorsId);
-    // console.log("array-L", sectorsId.length);
 
     return sectorsId;
 };
@@ -99,19 +98,6 @@ class App extends React.Component {
             [name]: value,
             [name]: target.type === 'checkbox' ? target.checked : target.value,
     });
-
-        // console.log("agree", this.state.agree);
-        // console.log("name", this.state.username);
-        console.log("name-L", this.state.username?.length);
-        // console.log("sectorsId", this.state.sectorsId);
-        // console.log("sectorsId-L", this.state.sectorsId.length);
-        console.log("sectorValue", this.state.sectorValue.length);
-        // console.log("errors", this.state.errorCount);
-        // console.log("errors{}", this.state.errors);
-        console.log("valid", this.state.formValid);
-        // console.log("value", this.state.value);
-        // console.log("disabled state --- ", !this.state.username > 4 || !this.state.sectorValue.length > 0)
-        console.log("disabled state --- ", !(this.state.username?.length > 4 && this.state.sectorValue.length > 0))
 
         this.setState({formValid: validateForm(this.state.errors)});
         this.setState({errorCount: countErrors(this.state.errors)});
@@ -225,8 +211,6 @@ class App extends React.Component {
                             type="checkbox"
                             checked={this.state.agree}
                             onChange={this.handleInputChange}
-                            // disabled={!this.state.sectorValue.length > 0 || this.state.username.length === 0}
-                            // disabled={!this.state.formValid || !this.state.sectorValue.length > 0}
                             disabled={!(this.state.username?.length > 4 && this.state.sectorValue.length > 0)}
                         />
                         Agree to terms

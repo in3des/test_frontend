@@ -6,9 +6,8 @@ const Sector = ({sectors, temp}) => {
         <>
             {sectors.map(data => {
                 if (data.parentId != null) {
-                    beforeSpace = temp + "\u00a0\u00a0"
+                    beforeSpace = temp + "\u00a0\u00a0\u00a0\u00a0"
                 }
-
                 return (
                     <>
                         <option value={data.id}>{`${beforeSpace}  ${data.name}`}</option>
